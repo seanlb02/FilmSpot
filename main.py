@@ -1,4 +1,4 @@
-
+from sklearn.decomposition import PCA
 import pandas as pandas
 import numpy as n 
 
@@ -107,25 +107,69 @@ class App_dataframe:
                     break
 
             if filter_method == "Back":
+                App_dataframe.show_main_menu()
                 break
             else:
-                print('Want to give it another go?')
+                print('\n\nWant to give it another go? Remember, you can enter [back] to return to the main menu')
 
-# the main menu is a fuction, called when the program opens and then when the user enters 'back' enough times while the program is running
+# this is the main menu - a static fuction, called when the program opens and then when the user enters 'back' enough times while the program is running
 
     @staticmethod
     def show_main_menu():
-        print("-------------------Welcome to the main menu--------------------\n\n 1.    Search the FilmSpot database       2.     Your to-watch-list \n\n 3.    Your Recommendations               4.      FilmSpot Trivia!\n\n\n")
-        menu_selection = str(input(f'Select where you would like to go[Enter 1,2,3 or 4]: '))
-        if menu_selection == "1":
+        print("-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your to-watch-list \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
+        menu_selection = str(input(f'Select where you would like to go[Enter 1,2,3 or 4]: ').title())
+        while True:
+            if menu_selection == "1":
+                App_dataframe.filter_function()
+                break
+            elif menu_selection == "2":
+                print('hi')
+                break
+            elif menu_selection == "3":
+                App_dataframe.pca()
+                break
+            elif menu_selection == "4":
+                App_dataframe.trivia()
+                break
+            elif menu_selection == "Back":
+                print('Sad to see you go! So long!')
+                break
+            else:
+                print('Invalid input, try again')
+                break
+
+
+## this is the 'recommendations' function built on a PCA analysis condcuted by feeding input data from the app_df into a scikit-learn package framework...
+
+    @staticmethod 
+    def pca ():
+        print('\n-------------------------\n Welcome to the Reccomendations page.\n----------------------------\n Tell us some of your favourite movies and we will give some tips on you might like to watch next!\n ')
+        user_favs_list = str(input(f'Enter 10 of your favourite movies from Filmspots top 1000 (if you need to have a look them again, enter [search]): ').title())
+        if user_favs_list == "Search":
             App_dataframe.filter_function()
-        if menu_selection == "2":
-            print('hi')
 
 
+    @staticmethod
+    def trivia ():
+        print('\n-------------------------\n Welcome to Filmspot Trivia!!!.\n----------------------------\n Test your movie knowledge and find a great flick in the process!\n ')
+        start = input("Enter [start] to begin!: ")
+        score = 0
 
-
-
+        while start == "start":
+            print("Can you name this movie?")
+            random = (App_dataframe.app_df.sample(1))
+            print(random["Synopsis"].to_string())
+            answer1 = input("Whats the title of this movie? [need a hint? enter [hint]:").title()
+            if answer1 == random["Name"]:
+                score += 1
+                print("Thats Right!!!")
+                print(f"Your score is now: {score}")
+            elif answer1 == "Hint":
+                print(random["Year"].to_string())
+            else:
+                print("Sorry, wrong answer. Lets start again shall we...")
+                break
+        
 
 
 
