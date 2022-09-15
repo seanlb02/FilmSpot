@@ -11,5 +11,4 @@ df[["Genre", "Genre 2", "Genre 3"]] = df["Genre"].str.split(",", expand=True)
 df.index.name = "Rank"
 df.index += 1
 
-
 app_df = df
