@@ -154,24 +154,44 @@ class App_dataframe:
         print('\n-------------------------\n Welcome to Filmspot Trivia!!!.\n----------------------------\n Test your movie knowledge and find a great flick in the process!\n ')
         start = input("Enter [start] to begin!: ")
         score = 0
+        play_round = 0
 
         while start == "start":
-            print("Can you name this movie?")
-            random = (App_dataframe.app_df.sample(1))
-            print(random["Synopsis"].to_string())
-            answer1 = input("Whats the title of this movie? [need a hint? enter [hint]:").title()
-            if answer1 == random["Name"]:
-                score += 1
-                print("Thats Right!!!")
-                print(f"Your score is now: {score}")
-            elif answer1 == "Hint":
-                print(random["Year"].to_string())
-            else:
-                print("Sorry, wrong answer. Lets start again shall we...")
+            play_round +=1
+            print(f"Round: {play_round}. Can you name this movie?\n")
+            random_movie = (App_dataframe.app_df.sample(1))
+            random_bio = (random_movie["Synopsis"].to_string(index=False, header=False))
+            random_name = (random_movie["Name"].to_string(index=False, header=False))
+            random_year = (random_movie["Year"].to_string(index=False, header=False))
+            print(random_bio)
+            print((random_name).title())
+            print(random_year)
+            while True:
+                answer1 = input("\nWhats the title of this movie? [need a hint? enter [hint]: ").title()
+                if (answer1) == (f'{random_name}'):
+                    score += 5
+                    print("\nThats Right!!!")
+                    print(f"Your score is now: {score}\n\n")
+                    break
+                if answer1 == "Hint":
+                    print(f'\nHint: it was released in {random_year}')
+                    continue
+                else:
+                    print(f'{answer1}? C\'mon I thought you knew this!')
+                    while True:
+                        try_again = input("Sorry, wrong answer!  Enter [yes] to have another go! Enter [back] if you have had enough: ").title()
+                        if try_again == "Back":
+                            App_dataframe.show_main_menu()
+                            break
+                        if try_again == "Yes":
+                            play_round = 0
+                            score = 0
+                            break
                 break
+                    
         
-
-
+## this trivia loop is a bit verbose because dealing with booleans with Pandas Dfs is a challenege. Extra step was done to turn Df values to dtring variables so booleans can be run
+## Traditional trivia games make you start again for a wrong answer, since many of these movies are obscure/old I figued i'd make the game more educational by letting the user continue even if wrong
 
 ###### Start Program (everything above this can probably go into its own module)#####
 #welcome message when app opens:
