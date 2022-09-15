@@ -13,5 +13,3 @@ df.index += 1
 
 
 app_df = df
-
-print(app_df.head(10))
