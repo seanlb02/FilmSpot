@@ -2,18 +2,10 @@ from sklearn.decomposition import PCA
 import pandas as pandas
 import numpy as n 
 
-# setting up the primary moveis database with Pandas #
 
 
-# df = pandas.read_csv('/home/lucian2/data for terminal app/imdb_top_1000.csv')
-# df = df.drop(df.columns[[0, 3, 4, 8, 14, 15]], axis=1)
-# df.rename(columns = {'Series_Title':'Name', 'Released_Year':'Year', 'Overview':'Synopsis', 'IMDB_Rating':'IMBD rating'}, inplace = True)
-# df[["Genre", "Genre 2", "Genre 3"]] = df["Genre"].str.split(",", expand=True)
-# df.index.name = "Rank"
-# df.index += 1
 
 
-# app_df = df
 
 # the primary movies data base is stored in a class called App_dataframe
 
@@ -34,8 +26,15 @@ class App_dataframe:
     df = df.drop(df.columns[[0, 3, 4, 8, 14, 15]], axis=1)
     df.rename(columns = {'Series_Title':'Name', 'Released_Year':'Year', 'Overview':'Synopsis', 'IMDB_Rating':'IMBD rating'}, inplace = True)
     df[["Genre", "Genre 2", "Genre 3"]] = df["Genre"].str.split(",", expand=True)
+    titles = df["Name"]
+    capitalised_titles = (f'{titles}').title()
+    df["Name"] = df["Name"].str.title()
     df.index.name = "Rank"
     df.index += 1
+
+    pandas.set_option('display.max_rows', None)
+    pandas.set_option('display.width', None)
+    # pandas.set_option('display.max_colwidth', -1)
 
 ## Set the class variable ##
     app_df = df
@@ -43,67 +42,73 @@ class App_dataframe:
     #this is the method for the 'filter/search' functionality
     @staticmethod
     def filter_function():
-
+        print(f"\n Welcome to FilmSpot\'s top 1000 movies database!")
         while True:
-            filter_method = str(input(f"Select how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
+            
+            filter_method = str(input(f"\nSelect how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
             while filter_method == "Name":
                 title_search = str(input(f'Enter your movie title: ').title())
                 result = App_dataframe.app_df.loc[App_dataframe.app_df['Name'] == (f'{title_search}')]
+                search_result = result[["Name", "Year", "Genre", "IMBD rating", "Director"]]
+                if  title_search in App_dataframe.app_df.values:
+                    print(f'\nYep! its in there: \n')
+                    print(search_result)
+                    break
                 if title_search == "Back":
                     break
                 elif title_search not in App_dataframe.app_df.values:
                     print('Hmm...Looks like that one is not in our top 1000. Check your spelling and try again')
-                else:
-                    print(f'Yep! its in there: ')
-                    print(result)
-                    break
-
+                              
             while filter_method == "Year":
                 year_search = str(input(f'Enter a year: ').title())
                 result = App_dataframe.app_df.loc[App_dataframe.app_df['Year'] == (f'{year_search}')]
+                search_result = result[["Name", "Year", "Genre", "IMBD rating", "Director"]]
                 if year_search == "Back":
                     break
                 elif year_search not in App_dataframe.app_df.values:
                     print("Invalid input, give it another go")
                 else:
                     print(f'---Results for {year_search}---')
-                    print(result)
+                    print(search_result)
                     break
 
             while filter_method == "Genre":
                 genre_search = (input(f'Enter one or more genres from the following [Action, Drama, Comedy, Adventure, Animation, Biography, Horror, Fantasy, History]: ').title())
                 result = App_dataframe.app_df[App_dataframe.app_df.isin([f'{genre_search}']).any(axis=1)]
+                search_result = result[["Name", "Year", "Genre", "IMBD rating", "Director"]]
                 if genre_search == "Back":
                     break
                 elif genre_search not in App_dataframe.app_df.values:
                     print('Oops...Looks like what you have entered is invalid')
                 else:
                     print(f'---Results for {genre_search}--- ')
-                    print(result)
+                    print(search_result)
                     break
 
             while filter_method == "Cast":
                 cast_search = (input(f'Enter the name of an actor or actress: ').title())
                 result = App_dataframe.app_df[App_dataframe.app_df.isin([f'{cast_search}']).any(axis=1)]
+                search_result = result[["Name", "Year", "Genre", "IMBD rating", "Director"]]
                 if cast_search == "Back":
                     break
                 elif cast_search not in App_dataframe.app_df.values:
                     print(f"Hmm... either {cast_search} isnt in our 1000, or you made them up...")
                 else:
                     print(f'---Results for {cast_search}--- ')
-                    print(result)
+                    print(search_result)
                     break
 
             while filter_method == "Director":
                 director_search = str(input(f'Enter the full name of a director: ').title())
                 result = App_dataframe.app_df.loc[App_dataframe.app_df['Director'] == (f'{director_search}')]
+                search_result = result[["Name", "Year", "Genre", "IMBD rating", "Director"]]
                 if director_search == "Back":
                     break
                 elif director_search not in App_dataframe.app_df.values:
                     print(f"Hmm... either {director_search} isnt in our 1000, you misspelt, or you made them up...")
                 else: 
                     print(f'---Results for {director_search}--- ')
-                    print(result)
+                    print(search_result)
                     break
 
             if filter_method == "Back":
@@ -116,7 +121,7 @@ class App_dataframe:
 
     @staticmethod
     def show_main_menu():
-        print("-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your to-watch-list \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
+        print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your to-watch-list \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
         menu_selection = str(input(f'Select where you would like to go[Enter 1,2,3 or 4]: ').title())
         while True:
             if menu_selection == "1":
@@ -152,42 +157,47 @@ class App_dataframe:
     @staticmethod
     def trivia ():
         print('\n-------------------------\n Welcome to Filmspot Trivia!!!.\n----------------------------\n Test your movie knowledge and find a great flick in the process!\n ')
-        start = input("Enter [start] to begin!: ")
         score = 0
         play_round = 0
-
-        while start == "start":
-            play_round +=1
-            print(f"Round: {play_round}. Can you name this movie?\n")
-            random_movie = (App_dataframe.app_df.sample(1))
-            random_bio = (random_movie["Synopsis"].to_string(index=False, header=False))
-            random_name = (random_movie["Name"].to_string(index=False, header=False))
-            random_year = (random_movie["Year"].to_string(index=False, header=False))
-            print(random_bio)
-            print((random_name).title())
-            print(random_year)
-            while True:
-                answer1 = input("\nWhats the title of this movie? [need a hint? enter [hint]: ").title()
-                if (answer1) == (f'{random_name}'):
-                    score += 5
-                    print("\nThats Right!!!")
-                    print(f"Your score is now: {score}\n\n")
-                    break
-                if answer1 == "Hint":
-                    print(f'\nHint: it was released in {random_year}')
-                    continue
-                else:
-                    print(f'{answer1}? C\'mon I thought you knew this!')
-                    while True:
-                        try_again = input("Sorry, wrong answer!  Enter [yes] to have another go! Enter [back] if you have had enough: ").title()
-                        if try_again == "Back":
-                            App_dataframe.show_main_menu()
-                            break
-                        if try_again == "Yes":
-                            play_round = 0
-                            score = 0
-                            break
+        while True:
+            start = input("Enter [start] to begin!: ")
+            while start != "start":
                 break
+            while start == "start":
+                play_round +=1
+                print(f"----------------------------------\n\n Round: {play_round}. Can you name this movie?\n")
+                random_movie = (App_dataframe.app_df.sample(1))
+                random_bio = (random_movie["Synopsis"].to_string(index=False, header=False))
+                random_name = (random_movie["Name"].to_string(index=False, header=False))
+                random_year = (random_movie["Year"].to_string(index=False, header=False))
+                random_director = (random_movie["Director"].to_string(index=False, header=False))
+                print(random_bio)
+                print((random_name).title())
+                print(random_year)
+                while True:
+                    answer1 = input("\nWhats the title of this movie? [need a hint? enter [hint]: ").title()
+                    if (answer1) == ((f'{random_name}').title()):
+                        score += 5
+                        print("\n----------------------------------\n\nThats Right!!!")
+                        print(f"Your score is now: {score}\n")
+                        break
+                    if answer1 == "Hint":
+                        print(f'\nHint: it was directed by {random_director} in {random_year}')
+                        continue
+                    else:
+                        print(f'{answer1}? C\'mon I thought you knew this!')
+                        while True:
+                            try_again = input("Sorry, wrong answer!  Enter [yes] to start again. Enter [back] if you have had enough: ").title()
+                            if try_again == "Back":
+                                App_dataframe.show_main_menu()
+                                break
+                            if try_again == "Yes":
+                                play_round = 0
+                                score = 0
+                                break
+                        break
+                break
+            break
                     
         
 ## this trivia loop is a bit verbose because dealing with booleans with Pandas Dfs is a challenege. Extra step was done to turn Df values to dtring variables so booleans can be run
