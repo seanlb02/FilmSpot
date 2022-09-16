@@ -151,6 +151,7 @@ class App_dataframe:
         print('\n-------------------------\n Welcome to the Reccomendations page.\n----------------------------\n Tell us some of your favourite movies and we will give some tips on you might like to watch next!\n ')
         user_favs_list = str(input(f'Enter 10 of your favourite movies from Filmspots top 1000 (if you need to have a look them again, enter [search]): ').title())
         if user_favs_list == "Search":
+            
             App_dataframe.filter_function()
 
 
@@ -199,8 +200,18 @@ class App_dataframe:
                 break
             break
                     
-        
-## this trivia loop is a bit verbose because dealing with booleans with Pandas Dfs is a challenege. Extra step was done to turn Df values to dtring variables so booleans can be run
+#This creates a subclass of the app dataframe called 'User' and initialises two instance variables: name and  favourite_movies(inerited from the App_dataframe)
+
+class User(App_dataframe):
+
+    def __init__(self, name, fav_movies, app_df):
+        self.name = name
+        self.fav_movies = fav_movies
+        super().__init__(app_df)
+
+    #inside this class were going to have two staticmethods/sub-class functions that add instances (user signup/login), 
+
+
 ## Traditional trivia games make you start again for a wrong answer, since many of these movies are obscure/old I figued i'd make the game more educational by letting the user continue even if wrong
 
 ###### Start Program (everything above this can probably go into its own module)#####
@@ -211,7 +222,6 @@ print('*** Always remember, to go back, just enter: back ****\n')
 # filter_method = str(input(f"Select how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
 
 
-      
 # this triggers the main menu
 App_dataframe.show_main_menu()
 
