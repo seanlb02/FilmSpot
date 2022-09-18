@@ -121,14 +121,14 @@ class App_dataframe:
 
     @staticmethod
     def show_main_menu():
-        print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your to-watch-list \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
+        print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your favourites \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
         menu_selection = str(input(f'Select where you would like to go[Enter 1,2,3 or 4]: ').title())
         while True:
             if menu_selection == "1":
                 App_dataframe.filter_function()
                 break
             elif menu_selection == "2":
-                print('hi')
+                User.user_auth()
                 break
             elif menu_selection == "3":
                 App_dataframe.pca()
@@ -199,23 +199,43 @@ class App_dataframe:
                         break
                 break
             break
-                    
+## Traditional trivia games make you start again for a wrong answer, since many of these movies are obscure/old I figued i'd make the game more educational by letting the user continue even if wrong
+
+
+
 #This creates a subclass of the app dataframe called 'User' and initialises two instance variables: name and  favourite_movies(inerited from the App_dataframe)
 
 class User(App_dataframe):
 
+    members = []
+
     def __init__(self, name, fav_movies, app_df):
         self.name = name
-        self.fav_movies = fav_movies
+        self.fav_movies = fav_movies 
         super().__init__(app_df)
 
-    #inside this class were going to have two staticmethods/sub-class functions that add instances (user signup/login), 
+    
+    # this initialises new instances as items in the list members (class variable User.members[])
+
+        User.members.append(self)
+
+    # here is a function that adds instances "users" (i.e. a user signup/login) 
 
 
-## Traditional trivia games make you start again for a wrong answer, since many of these movies are obscure/old I figued i'd make the game more educational by letting the user continue even if wrong
+    @staticmethod 
+    def user_auth():
+        username = str(input("Enter your username to sign in or create an account. *Make sure to remember your user name for next time!*").title())
+        favs = App_dataframe.app_df
+        database = App_dataframe.app_df
+        
+        User.members.append(User(username, favs, database)
+
+
+
 
 ###### Start Program (everything above this can probably go into its own module)#####
 #welcome message when app opens:
+
 print('Welcome to FilmSpot: home to the top 1000 movies\n -----------------------------------------------------')
 
 print('*** Always remember, to go back, just enter: back ****\n')
