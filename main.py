@@ -1,3 +1,4 @@
+
 from sklearn.decomposition import PCA
 import pandas as pandas
 import numpy as n 
@@ -23,9 +24,10 @@ class App_dataframe:
 
 
     df = pandas.read_csv('/home/lucian2/data for terminal app/imdb_top_1000.csv')
-    df = df.drop(df.columns[[0, 3, 4, 8, 14, 15]], axis=1)
+    df = df.drop(df.columns[[0, 4, 8, 14, 15]], axis=1)
     df.rename(columns = {'Series_Title':'Name', 'Released_Year':'Year', 'Overview':'Synopsis', 'IMDB_Rating':'IMBD rating'}, inplace = True)
     df[["Genre", "Genre 2", "Genre 3"]] = df["Genre"].str.split(",", expand=True)
+    df["Genre 2"] = df["Genre 2"].str.strip()
     titles = df["Name"]
     capitalised_titles = (f'{titles}').title()
     df["Name"] = df["Name"].str.title()
@@ -128,10 +130,10 @@ class App_dataframe:
                 App_dataframe.filter_function()
                 break
             elif menu_selection == "2":
-                User.user_auth()
+                print("hi")
                 break
             elif menu_selection == "3":
-                App_dataframe.pca()
+                App_dataframe.recommender()
                 break
             elif menu_selection == "4":
                 App_dataframe.trivia()
@@ -142,17 +144,6 @@ class App_dataframe:
             else:
                 print('Invalid input, try again')
                 break
-
-
-## this is the 'recommendations' function built on a PCA analysis condcuted by feeding input data from the app_df into a scikit-learn package framework...
-
-    @staticmethod 
-    def pca ():
-        print('\n-------------------------\n Welcome to the Reccomendations page.\n----------------------------\n Tell us some of your favourite movies and we will give some tips on you might like to watch next!\n ')
-        user_favs_list = str(input(f'Enter 10 of your favourite movies from Filmspots top 1000 (if you need to have a look them again, enter [search]): ').title())
-        if user_favs_list == "Search":
-            
-            App_dataframe.filter_function()
 
 
     @staticmethod
@@ -203,34 +194,52 @@ class App_dataframe:
 
 
 
-#This creates a subclass of the app dataframe called 'User' and initialises two instance variables: name and  favourite_movies(inerited from the App_dataframe)
 
-class User(App_dataframe):
 
-    members = []
 
-    def __init__(self, name, fav_movies, app_df):
-        self.name = name
-        self.fav_movies = fav_movies 
-        super().__init__(app_df)
 
-    
     # this initialises new instances as items in the list members (class variable User.members[])
 
-        User.members.append(self)
+
 
     # here is a function that adds instances "users" (i.e. a user signup/login) 
 
 
+
+
+
+
+
+## this is the 'recommendations' function that returns a list of 10 films similar to the users input, this list can be added to the users 'to-watch-list'.
     @staticmethod 
-    def user_auth():
-        username = str(input("Enter your username to sign in or create an account. *Make sure to remember your user name for next time!*").title())
-        favs = App_dataframe.app_df
-        database = App_dataframe.app_df
-        
-        User.members.append(User(username, favs, database)
-
-
+    def recommender ():
+        while True:
+            title_search = str(input(f'Enter a movie title and we\'ll recommend some more from our list: ').title())
+            result = App_dataframe.app_df.loc[App_dataframe.app_df['Name'] == (f'{title_search}')]
+            genre1_result = (result["Genre"].to_string(index=False, header=False))
+            genre2_result = (result["Genre 2"].to_string(index=False, header=False))
+            genre2_result = genre2_result.strip()
+            cert_result = (result["Certificate"]).to_string(index=False, header=False)
+            cast_result = (result["Star1"].to_string(index=False, header=False))
+            director_result = (result["Director"].to_string(index=False, header=False))
+            # subsetDataFrame = App_dataframe.app_df.loc[App_dataframe.app_df.isin([genre1_result, genre2_result]).any(axis=1)]
+            subsetDataFrame = App_dataframe.app_df.loc[(App_dataframe.app_df['Genre'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result) | (App_dataframe.app_df['Genre 2'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result)]
+            # subsetDataFrame = App_dataframe.app_df.loc[App_dataframe.app_df['Genre'].isin([genre1_result, genre2_result])]
+            reccomended_list = subsetDataFrame[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]].head(10)
+            if  title_search in App_dataframe.app_df.values:
+                print(f'\nResults for {title_search}: \n')
+                
+                # print(cast_result)
+       
+                print(genre2_result)
+                print(genre1_result)
+                print(reccomended_list)
+                # if result[["Genre", "Director", "Star1"]] in 
+                
+            if title_search == "Back":
+                break
+            elif title_search not in App_dataframe.app_df.values:
+                print('Hmm...Looks like that one is not in our top 1000. Check your spelling and try again')
 
 
 ###### Start Program (everything above this can probably go into its own module)#####
@@ -240,7 +249,7 @@ print('Welcome to FilmSpot: home to the top 1000 movies\n ----------------------
 
 print('*** Always remember, to go back, just enter: back ****\n')
 # filter_method = str(input(f"Select how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
-
+print(App_dataframe.app_df.head(10))
 
 # this triggers the main menu
 App_dataframe.show_main_menu()
