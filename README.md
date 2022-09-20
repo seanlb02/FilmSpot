@@ -22,3 +22,14 @@ Users can search the database by entering '1' on the main menu.
 
 Users then are prompted to filter their search by chosing to search by movie Title, Year, Cast or Director.
 
+### 3. My Reccomendations 
+
+This is a simple function that returns a list of 10 movies 
+
+<em>Limitations </em>
+
+Clarification should be made regarding the sophistocation of the reccommended list returned. Due to the low quality of data in the IMBD dataset used in this terminal app, I was unable to build a proper reccomendations algorithem, I also did not have time to try to enhance the results by performing a Multiple Factor Analysis or PCA that would have helped significantly. In turn, the 'reccomended' list is considered more a list not of 'similar' movies to the on the user inputs, but a list of movies they might enjoy (being the same rating and similar genres). Either way I felt the tool was usefull to the average user. 
+
+### 3. My to-watch-list
+
+Users can sign in/create an account which allows them to store the list they are recomended in the 'my reccomendations' section (menu item 4.). Users are prompted whether they wish to 'add' (append) the recommendations list onto their 'to-watch-list. 
