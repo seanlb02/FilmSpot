@@ -1,5 +1,6 @@
 import pickle 
 import gc
+from main import App_dataframe
 
 
 # Users is a class to store (1) a users account and (2) their dynamic 'watchlist'
@@ -15,7 +16,7 @@ class Users:
     @staticmethod
     def create_user():           
         name = input(f'Enter a username to login to your account: ')
-        new_user = Users(name, App_dataframe.app_df.head(10))
+        new_user = Users(name, App_dataframe.app_df[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]].head(10))
         pickle_out = open(name, "wb")
         pickle.dump(new_user, pickle_out)
         pickle_out.close()
@@ -28,7 +29,7 @@ class Users:
         print(user_list.watchlist)
 
 
-    create_user()
+Users.create_user()
     # display_watchlist()
 
 

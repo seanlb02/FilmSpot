@@ -240,24 +240,27 @@ class Users:
                     if add_query == "No":
                         break
                     elif add_query == "Yes": 
-                        account_query = input(f'Do you have an account? If so enter your [username], If not, enter [no]: ').title()
-# try
-                        verify_name = account_query 
-                        #this loads in the serialised watchlist of the user to the program:
-                        pickle_in = open(verify_name, "rb")
-                        user_list = pickle.load(pickle_in)
-                        print(user_list.watchlist)
-                        #this appends the 'reccomended' list of films to a user's watchlist
-                        appended_df = user_list.watchlist.append(reccomended_list, ignore_index=True)
-                        user_watchlist = Users(name, appended_df)
-                        # this overwrites the user's watchlist stored/serialised in a pickle:
-                        pickle_out = open(verify_name, "wb")
-                        pickle.dump(user_watchlist, pickle_out)
-                        pickle_out.close() 
-                        break
-                        # # except []:
-                            #this will create an account if there is not one saved in the program:
-                        Users.create_user() 
+                        try:
+                            account_query = input(f'Do you have an account? If so enter your [username], If not, enter [no]: ')
+                            verify_name = account_query 
+                            #this loads in the serialised watchlist of the user to the program:
+                            pickle_in = open(verify_name, "rb")
+                            user_list = pickle.load(pickle_in)
+                            # print(user_list.watchlist)
+                            #this appends the 'reccomended' list of films to a user's watchlist
+                            # appended_df = user_list.watchlist.append(reccomended_list, ignore_index=True)
+                            appended_df = pandas.concat([user_list.watchlist,reccomended_list], axis=0)
+
+                            user_watchlist = Users(verify_name, appended_df)
+                            # this overwrites the user's watchlist stored/serialised in a pickle:
+                            pickle_out = open(verify_name, "wb")
+                            pickle.dump(user_watchlist, pickle_out)
+                            pickle_out.close() 
+                            break
+                        except FileNotFoundError:
+                                #this will create an account if there is not one saved in the program, or if user enters 'no' to the above input:
+                            Users.create_user()
+                            continue
 
                         
 
@@ -272,8 +275,8 @@ class Users:
     
     @staticmethod
     def create_user():           
-        name = input(f'Enter a username to login to your account: ')
-        new_user = Users(name, App_dataframe.app_df.head(10))
+        name = input(f'Enter a username to create your account: ')
+        new_user = Users(name, App_dataframe.dummy_entry)
         pickle_out = open(name, "wb")
         pickle.dump(new_user, pickle_out)
         pickle_out.close()
@@ -296,7 +299,7 @@ class Users:
 print('Welcome to FilmSpot: home to the top 1000 movies\n -----------------------------------------------------')
 
 print('*** Always remember, to go back, just enter: back ****\n')
-print(App_dataframe.dummy_entry)
+
 # filter_method = str(input(f"Select how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
 
 
