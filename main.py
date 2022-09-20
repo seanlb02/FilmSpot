@@ -2,6 +2,9 @@
 from sklearn.decomposition import PCA
 import pandas as pandas
 import numpy as n 
+import pickle 
+
+
 
 
 
@@ -130,7 +133,7 @@ class App_dataframe:
                 App_dataframe.filter_function()
                 break
             elif menu_selection == "2":
-                print("hi")
+                Users.display_watchlist()
                 break
             elif menu_selection == "3":
                 App_dataframe.recommender()
@@ -191,29 +194,9 @@ class App_dataframe:
                 
             break
         
-                
-            
 
 
-
-
-
-
-
-
-    # this initialises new instances as items in the list members (class variable User.members[])
-
-
-
-    # here is a function that adds instances "users" (i.e. a user signup/login) 
-
-
-
-
-
-
-
-## this is the 'recommendations' function that returns a list of 10 films similar to the users input, this list can be added to the users 'to-watch-list'.
+## this is the 'recommendations' function that returns a list of 10 films the user might like, this list can then be added to the users 'to-watch-list'.
     @staticmethod 
     def recommender ():
         while True:
@@ -234,16 +217,41 @@ class App_dataframe:
                 
                 # print(cast_result)
        
-                print(genre2_result)
-                print(genre1_result)
+                
                 print(reccomended_list)
-                # if result[["Genre", "Director", "Star1"]] in 
+                # user is then prompted to answer whether they want to add these movies to their 'to-watch-list'
+                print('Do you want to add this list to your to-watch-list?')
+
                 
             if title_search == "Back":
                 App_dataframe.show_main_menu()
                 break
             elif title_search not in App_dataframe.app_df.values:
                 print('Hmm...Looks like that one is not in our top 1000. Check your spelling and try again')
+
+
+class Users:
+
+
+    def __init__(self, username, watchlist):
+        self.username = username
+        self.watchlist = watchlist 
+
+# in this instance, the attribute self.watchlist will store a dafaframe the pandas dataframe that is returned in the 'reccomender' function.
+    @staticmethod
+    def create_user():           
+        name = input(f'Enter a username to create or login to your account: ')
+        new_user = Users(name, App_dataframe.app_df.head(10))
+        pickle_out = open(name, "wb")
+        pickle.dump(new_user, pickle_out)
+        pickle_out.close()
+
+    @staticmethod
+    def display_watchlist():
+        get_name = input(f'Enter your username to retrieve your watchlist: ')
+        pickle_in = open(get_name, "rb")
+        user_list = pickle.load(pickle_in)
+        print(user_list.watchlist)
 
 
 ###### Start Program (everything above this can probably go into its own module)#####
