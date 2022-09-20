@@ -12,13 +12,13 @@ class Users:
         self.watchlist = watchlist 
 
 # in this instance, the attribute self.watchlist will store a dafaframe the pandas dataframe that is returned in the 'reccomender' function.
-
-def create_user():           
-    name = input(f'Enter a username to create or login to your account: ')
-    new_user = Users(name, App_dataframe.app_df.head(10))
-    pickle_out = open(name, "wb")
-    pickle.dump(new_user, pickle_out)
-    pickle_out.close()
+    @staticmethod
+    def create_user():           
+        name = input(f'Enter a username to login to your account: ')
+        new_user = Users(name, App_dataframe.app_df.head(10))
+        pickle_out = open(name, "wb")
+        pickle.dump(new_user, pickle_out)
+        pickle_out.close()
 
     @staticmethod
     def display_watchlist():

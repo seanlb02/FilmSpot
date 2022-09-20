@@ -43,6 +43,9 @@ class App_dataframe:
 
 ## Set the class variable ##
     app_df = df
+    #I use this 'dummy_entry to initialise new accounts - its an [almost] empty dataframe
+    dummy_entry = app_df.iloc[[14]]
+    dummy_entry = dummy_entry[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]]
 
     #this is the method for the 'filter/search' functionality
     @staticmethod
@@ -136,7 +139,7 @@ class App_dataframe:
                 Users.display_watchlist()
                 break
             elif menu_selection == "3":
-                App_dataframe.recommender()
+                Users.recommender()
                 break
             elif menu_selection == "4":
                 App_dataframe.trivia()
@@ -196,9 +199,20 @@ class App_dataframe:
         
 
 
+
+
+
+class Users:
+
+
+    def __init__(self, username, watchlist):
+        self.username = username
+        self.watchlist = watchlist 
+
+
 ## this is the 'recommendations' function that returns a list of 10 films the user might like, this list can then be added to the users 'to-watch-list'.
     @staticmethod 
-    def recommender ():
+    def recommender():
         while True:
             title_search = str(input(f'Enter a movie title and we\'ll recommend some more from our list: ').title())
             result = App_dataframe.app_df.loc[App_dataframe.app_df['Name'] == (f'{title_search}')]
@@ -212,6 +226,7 @@ class App_dataframe:
             subsetDataFrame = App_dataframe.app_df.loc[(App_dataframe.app_df['Genre'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result) | (App_dataframe.app_df['Genre 2'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result)]
             # subsetDataFrame = App_dataframe.app_df.loc[App_dataframe.app_df['Genre'].isin([genre1_result, genre2_result])]
             reccomended_list = subsetDataFrame[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]].head(10)
+          
             if  title_search in App_dataframe.app_df.values:
                 print(f'\nResults for {title_search}: \n')
                 
@@ -220,7 +235,31 @@ class App_dataframe:
                 
                 print(reccomended_list)
                 # user is then prompted to answer whether they want to add these movies to their 'to-watch-list'
-                print('Do you want to add this list to your to-watch-list?')
+                while True:
+                    add_query = input(f'Do you want to add this list to your to-watch-list? Enter [Yes/No]').title()
+                    if add_query == "No":
+                        break
+                    elif add_query == "Yes": 
+                        account_query = input(f'Do you have an account? If so enter your [username], If not, enter [no]: ').title()
+# try
+                        verify_name = account_query 
+                        #this loads in the serialised watchlist of the user to the program:
+                        pickle_in = open(verify_name, "rb")
+                        user_list = pickle.load(pickle_in)
+                        print(user_list.watchlist)
+                        #this appends the 'reccomended' list of films to a user's watchlist
+                        appended_df = user_list.watchlist.append(reccomended_list, ignore_index=True)
+                        user_watchlist = Users(name, appended_df)
+                        # this overwrites the user's watchlist stored/serialised in a pickle:
+                        pickle_out = open(verify_name, "wb")
+                        pickle.dump(user_watchlist, pickle_out)
+                        pickle_out.close() 
+                        break
+                        # # except []:
+                            #this will create an account if there is not one saved in the program:
+                        Users.create_user() 
+
+                        
 
                 
             if title_search == "Back":
@@ -229,22 +268,19 @@ class App_dataframe:
             elif title_search not in App_dataframe.app_df.values:
                 print('Hmm...Looks like that one is not in our top 1000. Check your spelling and try again')
 
-
-class Users:
-
-
-    def __init__(self, username, watchlist):
-        self.username = username
-        self.watchlist = watchlist 
-
 # in this instance, the attribute self.watchlist will store a dafaframe the pandas dataframe that is returned in the 'reccomender' function.
+    
     @staticmethod
     def create_user():           
-        name = input(f'Enter a username to create or login to your account: ')
+        name = input(f'Enter a username to login to your account: ')
         new_user = Users(name, App_dataframe.app_df.head(10))
         pickle_out = open(name, "wb")
         pickle.dump(new_user, pickle_out)
         pickle_out.close()
+    
+    @staticmethod
+    def save_new_watchlist():           
+        pass
 
     @staticmethod
     def display_watchlist():
@@ -260,6 +296,7 @@ class Users:
 print('Welcome to FilmSpot: home to the top 1000 movies\n -----------------------------------------------------')
 
 print('*** Always remember, to go back, just enter: back ****\n')
+print(App_dataframe.dummy_entry)
 # filter_method = str(input(f"Select how you want to filter our database [Name, Year, Genre, Cast, Director]: ").title())
 
 
