@@ -229,19 +229,15 @@ class Users:
           
             if  title_search in App_dataframe.app_df.values:
                 print(f'\nResults for {title_search}: \n')
-                
-                # print(cast_result)
-       
-                
                 print(reccomended_list)
                 # user is then prompted to answer whether they want to add these movies to their 'to-watch-list'
                 while True:
-                    add_query = input(f'Do you want to add this list to your to-watch-list? Enter [Yes/No]').title()
+                    add_query = input(f'\nDo you want to add this list to your to-watch-list? Enter [Yes/No]\n').title()
                     if add_query == "No":
                         break
                     elif add_query == "Yes": 
                         try:
-                            account_query = input(f'Do you have an account? If so enter your [username], If not, enter [no]: ')
+                            account_query = input(f'\nDo you have an account? If so enter your [username], If not, enter [no]: ')
                             verify_name = account_query 
                             #this loads in the serialised watchlist of the user to the program:
                             pickle_in = open(verify_name, "rb")
@@ -260,11 +256,7 @@ class Users:
                         except FileNotFoundError:
                                 #this will create an account if there is not one saved in the program, or if user enters 'no' to the above input:
                             Users.create_user()
-                            continue
-
-                        
-
-                
+                            continue  
             if title_search == "Back":
                 App_dataframe.show_main_menu()
                 break
@@ -275,7 +267,7 @@ class Users:
     
     @staticmethod
     def create_user():           
-        name = input(f'Enter a username to create your account: ')
+        name = input(f'\nAll good! Lets make one now... Enter a username to create your account: ')
         new_user = Users(name, App_dataframe.dummy_entry)
         pickle_out = open(name, "wb")
         pickle.dump(new_user, pickle_out)
