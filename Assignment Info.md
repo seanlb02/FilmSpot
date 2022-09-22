@@ -8,11 +8,13 @@ FilmSpot is a program where users can search and find films listed on IMBDs 'top
 
 Work was completed within a Kanban agile framework using Trello to track progress.
 
+Code styling followed the PEP8 Python style guide (PEP8, 2001).
+
 
 ## App Features
 ---
 
-### 1. User accounts & sessions 
+### 1. User accounts
 
 Users have the option to search the (IMBD) FilmSpot database, play trivia and get reccomendations without creating or signing into their account. However, to utilise the 'watchlist' funciton, they will be asked to either login or create an account. User names and their 'watchlist' are stored as instances of a class called <em>Users</em>. This instance is create with a static method within the class and is permanently stored as a serialized instance via python pickle.
 
@@ -54,4 +56,20 @@ The process:
                 ready to be appended with a 
                 reccomended movies list. 
 
-## 
+## Development Implelentation Plan 
+---
+
+Trello Kanban project tracking was implemented to guide the following task checklists in the development of each app component:
+
+### Database cleaning, formatting and storage as a class 
+
+sdfwe
+
+![](/Assets/trelloSS1.png)
+
+
+---
+
+### References
+
+van Rossum, G., Warsaw, B., Coghlan, N. 2001. Python Enhancements Proposal 8 - Style guide for Python code. https://peps.python.org/pep-0008/. Accessed 21/9/22. 
