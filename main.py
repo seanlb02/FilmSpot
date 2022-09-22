@@ -9,9 +9,9 @@ from AppDf import *
 if __name__ == '__main__':
     #welcome message when app opens:
     try:
-        print('Welcome to FilmSpot: home to the top 1000 movies\n -----------------------------------------------------')
+        print('\n\nWelcome to FilmSpot: home to the top 1000 movies\n ---------------------------------------------------------------------------------------------')
 
-        print('*** Always remember, to go back, just enter: back ****\n')
+        print('\n*** Always remember, to go back, just enter: back ****\n')
 
 
 

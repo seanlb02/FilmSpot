@@ -212,9 +212,7 @@ class User:
             cert_result = (result["Certificate"]).to_string(index=False, header=False)
             cast_result = (result["Star1"].to_string(index=False, header=False))
             director_result = (result["Director"].to_string(index=False, header=False))
-            # subsetDataFrame = App_dataframe.app_df.loc[App_dataframe.app_df.isin([genre1_result, genre2_result]).any(axis=1)]
             subsetDataFrame = App_dataframe.app_df.loc[(App_dataframe.app_df['Genre'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result) | (App_dataframe.app_df['Genre 2'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result)]
-            # subsetDataFrame = App_dataframe.app_df.loc[App_dataframe.app_df['Genre'].isin([genre1_result, genre2_result])]
             reccomended_list = subsetDataFrame[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]].head(10)
           
             if  title_search in App_dataframe.app_df.values:
