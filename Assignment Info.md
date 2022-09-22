@@ -69,7 +69,9 @@ Trello Kanban project tracking was implemented to guide the following task check
 
 ### Database cleaning, formatting and storage as a class 
 
-1. 
+1. Write command within primary database Class that loads in the data stored on csv within program folder.
+2. Data needs to be cleaned: remove unecessary columns, convert values to title-case string
+3. format pandas so that when printed, dataframes and values are displayed in their entirety
 
 ### Search/filter function 
 
