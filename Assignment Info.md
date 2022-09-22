@@ -73,24 +73,42 @@ Trello Kanban project tracking was implemented to guide the following task check
 
 ### Search/filter function 
 
-1. 
+1. Initialise staticmethod within primary dataframe class
+2. build an input function that accepts any value yet converts to a title-cased string.
+3. write initialiser prompt that asks user how they wish to search the database: title, cast member, year, director
+4. make if/else block within an infinite while loop that returns a dataframe with rows that match the users input
+5. Ensure errors are caught either with else or Try blocks - write an error handler to ensure also that while loop is not broken 
+6. ensure user can return to the main menu and end while loop with an input 'back
+
 
 ### Trivia function
 
-1.
+1. Create static mthod within primary database class that is accessible in the main menu function
+2. Allow user to decide when to start by inputting 'start. Start will initate an infinite while loop that terminates when/if user enters 'back' to main menu
+3. Once started, write loop that fetches a RANDOM row from the database and prints ONLY the value string from the 'synopsis' column. User is then prompted to guess the movie title with another input
+4. build a hint option that returns the movie's year and director if the user asks for it
+5. Add a counter component to the loop that tracks what number question is being asked and also what the user score is. These counts are reset if there is a wrong answer inputted and the game ends. 
+
 
 ### Reccomender/account creation function
 
-1. 
+1. Write a function that takes a users input: a movie title, and returns (prints) the top 10 results of the returned dataframe that shares the same Genre 1, Genre 2 and Classification as the users inputted movie title
+2. prompt the user to chose whether they want to add the list to their 'watchlist'. User is asked to enter a username, if a name exists in the folder as a picked instance, this will add the recommended list to their 'watchlist'. 
+3. if username does not exist, user is asked if they want to make an account. Entering any user name will make and pickle a new instance of User class - the attributes being the username and an empty dataframe
+4. Like all component functions, users must be able to be able to enter 'back' to break out of the function loop.
 
 ### Display user watchlist function 
 
-1. 
+1. Option 2 on the main menu will trigger the watchlist function/component. 
+2. the function must be an infinite while loop where users can input a username, if the username exists in pickled format, it will be unpacked and  the 'watchlist' instance attribute/varibale will be printed.
+3. loop can be broken by pressing back (breaks loop and returns to main menu via calling the main menu function) 
 
 
 ### main menu function
 
-1. 
+1. Main menu component is a simple function containing a primary while loop that starts with an input which asks users to enter a number between 1 and 4. Each number corresponds with a menu item/option. 
+2. Continuing the loop and error handling with a try block if user inputs any value 
+3. build conditonal: if user input is 'back' the program terminates with a goodbye message printed. 
 
 ---
 
