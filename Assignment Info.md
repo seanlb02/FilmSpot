@@ -10,6 +10,9 @@ Work was completed within a Kanban agile framework using Trello to track progres
 
 Code styling followed the PEP8 Python style guide (PEP8, 2001).
 
+### Recognition 
+
+The app utilises IMBD's official top 1000 movies data via a dataset compiled by Omar Hany licenced via the IMBD authors and accessed via Kaggle.
 
 ## App Features
 ---
@@ -61,15 +64,38 @@ The process:
 
 Trello Kanban project tracking was implemented to guide the following task checklists in the development of each app component:
 
-### Database cleaning, formatting and storage as a class 
-
-sdfwe
 
 ![](/Assets/trelloSS1.png)
 
+### Database cleaning, formatting and storage as a class 
+
+1. 
+
+### Search/filter function 
+
+1. 
+
+### Trivia function
+
+1.
+
+### Reccomender/account creation function
+
+1. 
+
+### Display user watchlist function 
+
+1. 
+
+
+### main menu function
+
+1. 
 
 ---
 
 ### References
 
 van Rossum, G., Warsaw, B., Coghlan, N. 2001. Python Enhancements Proposal 8 - Style guide for Python code. https://peps.python.org/pep-0008/. Accessed 21/9/22. 
+
+Hany, O. 2020. IMDB top 1000 movies dataset. https://www.kaggle.com/datasets/omarhanyy/imdb-top-1000. Accessed 10/9/22

@@ -17,7 +17,7 @@ class App_dataframe:
 
     #here we create the dataframe by (1) reading in a pandas Dataframe (2) cleaning the data (3) setting the key class variable "app_df"
 
-    df = pandas.read_csv('/home/lucian2/data for terminal app/imdb_top_1000.csv')
+    df = pandas.read_csv('/home/lucian2/Sean_Gyuris_T1_A3/Assets/imdb_top_1000.csv')
     df = df.drop(df.columns[[0, 4, 8, 14, 15]], axis=1)
     df.rename(columns = {'Series_Title':'Name', 'Released_Year':'Year', 'Overview':'Synopsis', 'IMDB_Rating':'IMBD rating'}, inplace = True)
     df[["Genre", "Genre 2", "Genre 3"]] = df["Genre"].str.split(",", expand=True)
@@ -120,8 +120,7 @@ class App_dataframe:
             else:
                 print('\n\nWant to give it another go? Remember, you can enter [back] to return to the main menu')
 
-# this is the main menu - a static fuction, called when the program opens and then when the user enters 'back' enough times while the program is running
-
+    # this is the main menu - a static fuction, called when the program opens and then when the user enters 'back' enough times while the program is running
     @staticmethod
     def show_main_menu():
         print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your favourites \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
@@ -201,7 +200,7 @@ class User:
         self.watchlist = watchlist 
 
 
-## this is the 'recommendations' function that returns a list of 10 films the user might like, this list can then be added to the users 'to-watch-list'.
+    ## this is the 'recommendations' function that returns a list of 10 films the user might like, this list can then be added to the users 'to-watch-list'.
     @staticmethod 
     def recommender():
         while True:
@@ -256,8 +255,7 @@ class User:
             elif title_search not in App_dataframe.app_df.values:
                 print('Hmm...Looks like that one is not in our top 1000. Check your spelling and try again')
 
-# in this instance, the attribute self.watchlist will store a dafaframe the pandas dataframe that is returned in the 'reccomender' function.
-    
+    # in this instance, the attribute self.watchlist will store a dafaframe the pandas dataframe that is returned in the 'reccomender' function.
     @staticmethod
     def create_user():           
         name = input(f'\nHmm, doesn\'t look like you do. Lets make one now... Enter a username to create your account: ')
@@ -284,7 +282,7 @@ class User:
                         App_dataframe.show_main_menu()
                         return
             except (FileNotFoundError, TypeError):
-                tryagain = input("User does not exist. Try again or enter [back] to return to the main menu:  ").title()
+                tryagain = input("User does not exist. Enter [try again], or [back] to return to the main menu:  ").title()
                 if tryagain == "Back":
                     App_dataframe.show_main_menu()
                     return
