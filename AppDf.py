@@ -34,14 +34,11 @@ class App_dataframe:
 
     #Primary class variable
     app_df = df
-    #I use this 'dummy_entry to initialise new accounts - its an [almost] empty dataframe
+    #I use this 'dummy_entry' to initialise new accounts - its an [almost] empty dataframe
     dummy_entry = app_df.iloc[[14]]
     dummy_entry = dummy_entry[["Name", "Year", "Director", "Genre", "Genre 2", "Certificate"]]
 
-    """Below is the method for the 'filter/search' functionality
-
-    params/args: null 
-    """
+    # Below is the method for the 'filter/search' functionality
 
     @staticmethod
     def filter_function():
@@ -146,7 +143,7 @@ class App_dataframe:
                 print('Invalid input, try again')
                 continue
 
-
+    # this is the function that runs the trivia program
     @staticmethod
     def trivia ():
         print('\n-------------------------\n Welcome to Filmspot Trivia!!!.\n----------------------------\n Test your movie knowledge and find a great flick in the process!\n ')
@@ -210,6 +207,7 @@ class User:
             genre2_result = (result["Genre 2"].to_string(index=False, header=False))
             genre2_result = genre2_result.strip()
             cert_result = (result["Certificate"]).to_string(index=False, header=False)
+            #cast and director variables here if needed for testing
             cast_result = (result["Star1"].to_string(index=False, header=False))
             director_result = (result["Director"].to_string(index=False, header=False))
             subsetDataFrame = App_dataframe.app_df.loc[(App_dataframe.app_df['Genre'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result) | (App_dataframe.app_df['Genre 2'] == genre2_result) & (App_dataframe.app_df['Certificate'] == cert_result)]
@@ -232,7 +230,6 @@ class User:
                             user_list = pickle.load(pickle_in)
                             # print(user_list.watchlist)
                             #this appends the 'reccomended' list of films to a user's watchlist
-                            # appended_df = user_list.watchlist.append(reccomended_list, ignore_index=True)
                             appended_df = pandas.concat([user_list.watchlist,reccomended_list], axis=0)
 
                             user_watchlist = User(verify_name, appended_df)

@@ -1,5 +1,3 @@
-
-
 import pandas as pandas
 import numpy as n 
 import pickle 
