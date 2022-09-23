@@ -4,7 +4,7 @@ FilmSpot is a program where users can search and find films listed on IMBDs 'top
 
 ### Dependancies 
 
-Filmspot requires Python3 to be installed as well as the following dependancies in order to run via the terminal: <em>Pandas, Numpy</em>:
+Filmspot requires Python3, pip, as the following dependancies in order to run via your terminal: <em>Pandas, Numpy</em>:
 
 ```
 $ pip install pandas
