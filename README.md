@@ -4,7 +4,7 @@ FilmSpot is a program where users can search and find films listed on IMBDs 'top
 
 ### Dependancies 
 
-Filmspot requires the following dependancies to run: <em>Pandas, Numpy</em>:
+Filmspot requires Python3 to be installed as well as the following dependancies in order to run via the terminal: <em>Pandas, Numpy</em>:
 
 ```
 $ pip install pandas
@@ -46,11 +46,11 @@ At start-up the main menu is launched. Choose between options 1-4 to navigate th
 
 Entering 1. will take you to the database search. Once here, you will have the choice of searching the database by movie Title, Year, Cast member or Director. 
 
-Enter \[Name] or \[Year] \[]
+    Enter [Name] or [Year] or [Cast] or [Director]
 
 *Don't worry, our inputs aren't case-sensitive
 
-Once a search method is chosen, you may then type your search to have a look through the database. 
+Once a search method is chosen, you may then type who/what/when you're interested in and have a peruse through the database. 
 
 All results (if there are any) will be displayed for you instantly. 
 
@@ -62,7 +62,7 @@ FilmSpot allows users to create an account and store movies to their 'watchlist'
 
 If you have an account, enter your user name and your watchlist will appear on the screen. 
 
-To create an account, have a go at the reccomendations menu option.
+To create an account, have a go at the reccomendations menu option - Option 3.
 
 ### Option 3. Reccomendations 
 
@@ -72,12 +72,12 @@ All you need to do is enter the title of a movie you are fond of. Then Filmspot 
 
 Once you have returned a list of movies, you are given the option to add them to your watchlist. Enter 'yes' here to add and authenticate by entering your account username. 
 
-If you do not yet have am account, no stress. You will be prompted to enter a username which will set you up. AFter entering a name and saving your first reccomended list to your watchlist, you will be set up in our system.
+If you do not yet have an account, don't stress. You will be prompted to enter a username which will set you up. After entering a name and saving your first reccomended list to your watchlist, you will be set up in our system.
 
 Go 'back' to the main menu and have another go at looking at your watchlist ('Option 2.
 ')
 
-### FilmSpot Trivia
+### Option 4. FilmSpot Trivia
 
 Film spot trivia is a simple hollywood knowledge-tester. Users who are game are provided with a short film bio per round, and are tasked with guessing the film's title.
 
