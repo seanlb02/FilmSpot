@@ -120,7 +120,7 @@ class App_dataframe:
     # this is the main menu - a static fuction, called when the program opens and then when the user enters 'back' enough times while the program is running
     @staticmethod
     def show_main_menu():
-        print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your favourites \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
+        print("\n-------------------Welcome to the main menu--------------------\n\n\n 1.    Search the FilmSpot database       2.     Your Watchlist \n\n 3.    Your Recommendations               4.     FilmSpot Trivia!\n\n\n")
        
         while True:
             menu_selection = str(input(f'Select where you would like to go[Enter 1,2,3 or 4]: ').title())
