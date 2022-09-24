@@ -92,3 +92,7 @@ Earn 5 points per correct answer and discover some gems in the process.
 To terminate the program instantly, simply enter ctrl+'c'. 
 
 Enjoy!
+
+## Unit Testing
+
+Three tests were designed and run on the main menu, search, and trivia functions. These files are included in the program directory downloaded as zip. Because all functions and methods were packeaged in infinite loops, tests were designed to run through a single iteration using multiple inputs. 
