@@ -1,6 +1,7 @@
 # Documentation - Terminal assignment 
 
 ## Repo: https://github.com/seanlb02/terminal_app
+### Video Walkthrough: https://vimeo.com/753217247
 
 ## App Overview 
 
